@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 from .info import Info
+from .external_documentation import ExternalDocumentation
 
 
 class Swagger(Schema):
@@ -10,6 +11,7 @@ class Swagger(Schema):
     schemes = fields.Str()  # many
     consumes = fields.Str()  # many
     produces = fields.Str()  # many
+    externalDocs = fields.Nested(ExternalDocumentation)
     # paths = path object (required)
     # definitions = definitons object
     # parameters = parameters definition object
@@ -17,4 +19,3 @@ class Swagger(Schema):
     # securityDefinitions = security definition object
     # security = security requirement object
     # tags = [Tag object]
-    # external docs = [External documentiation object]
