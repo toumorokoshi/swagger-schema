@@ -1,21 +1,31 @@
 from marshmallow import Schema, fields
-from .info import Info
+from .lib.typeddict import TypedDict
+from .definitions import Definitions
 from .external_documentation import ExternalDocumentation
+from .info import Info
+from .path import Path
+from .paths import Paths
+from .parameters import Parameters
+from .response import Response
+from .schema import Schema
+from .security_definitions import SecurityDefinitions
+from .security_requirement import SecurityRequirement
+from .tag import Tag
 
 
 class Swagger(Schema):
-    swagger = fields.Str(required=True)
-    host = fields.Str()
     basePath = fields.Str()
-    info = fields.Nested(Info)
-    schemes = fields.Str()  # many
-    consumes = fields.Str()  # many
-    produces = fields.Str()  # many
+    consumes = fields.List(fields.Str)
+    definitions = TypedDict(fields.Str, fields.Nested(Schema))
     externalDocs = fields.Nested(ExternalDocumentation)
-    # paths = path object (required)
-    # definitions = definitons object
-    # parameters = parameters definition object
-    # responses = responses definitions object
-    # securityDefinitions = security definition object
-    # security = security requirement object
-    # tags = [Tag object]
+    host = fields.Str()
+    info = fields.Nested(Info)
+    paths = TypedDict(fields.Str, fields.Nested(Path), required=True)
+    parameters = fields.Nested(Parameters)
+    produces = fields.List(fields.Str)
+    responses = TypedDict(fields.Str, fields.Nested(Response))
+    schemes = fields.List(fields.Str)
+    swagger = fields.Str(required=True)
+    securityDefinitions = fields.Nested(SecurityDefinitions)
+    security = fields.List(fields.Nested(SecurityRequirement))
+    tags = fields.List(fields.Nested(Tag))
