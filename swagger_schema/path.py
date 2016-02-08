@@ -10,3 +10,4 @@ class Path(Schema):
     # head = operations object
     # patch = operations object
     # parameters = [parameters object | reference object]
+    pass
