@@ -1,4 +1,6 @@
 from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
 from .lib.typeddict import TypedDict
 from .external_documentation import ExternalDocumentation
 from .jsonschema import JsonSchema
@@ -9,6 +11,12 @@ from .response import Response
 from .security_definitions import SecurityDefinitions
 from .security_requirement import SecurityRequirement
 from .tag import Tag
+
+
+#class Swagger(SerializableObject):
+#    _schema = {
+#        "basePath": string_type,
+#    }
 
 
 class Swagger(Schema):

@@ -1,7 +1,10 @@
-from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
 
 
-class Contact(Schema):
-    name = fields.Str()
-    url = fields.Str()
-    email = fields.Str()
+class Contact(SerializableObject):
+    _schema = {
+        "name": string_type,
+        "url": string_type,
+        "email": string_type
+    }
