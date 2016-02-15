@@ -1,6 +1,12 @@
-from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
 
 
-class License(Schema):
-    name = fields.Str(required=True)
-    url = fields.Str()
+class License(SerializableObject):
+    _schema = {
+        "attributes": {
+            "name": string_type,
+            "url": string_type
+        },
+        "required": ["name"]
+    }

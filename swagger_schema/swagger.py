@@ -13,10 +13,26 @@ from .security_requirement import SecurityRequirement
 from .tag import Tag
 
 
-#class Swagger(SerializableObject):
-#    _schema = {
-#        "basePath": string_type,
-#    }
+class _Swagger(SerializableObject):
+    _schema = {
+        "attributes": {
+            "basePath": string_type,
+            "consumes":  [string_type],
+            # "definitions": TypedDict
+            "externalDocs": ExternalDocumentation,
+            "host": string_type,
+            "info": Info,
+            # "paths": TypeDict
+            # "parameters": TypedDict
+            # "responses": TypeDict
+            "schemes": [string_type],
+            "swagger": string_type,
+            # "securityDefinitions"
+            # "securityRequirement"
+            "tags": [Tag]
+        },
+        "required": ["info", "paths", "swagger"]
+    }
 
 
 class Swagger(Schema):

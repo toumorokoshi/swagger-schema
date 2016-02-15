@@ -1,6 +1,12 @@
-from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
 
 
-class ExternalDocumentation(Schema):
-    description = fields.Str()
-    url = fields.Str(required=True)
+class ExternalDocumentation(SerializableObject):
+    _schema = {
+        "attributes": {
+            "description": string_type,
+            "url": string_type
+        },
+        "required": ["url"]
+    }

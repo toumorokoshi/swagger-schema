@@ -12,14 +12,16 @@ class SerializableObject(object):
     """
 
     def __init__(self, **kwargs):
-        self._serializer = self._create_serializer()
+        self._serializer, self._required_values \
+            = self._create_serializer()
         for k, v in self._serializer.items():
-            if k not in kwargs:
+            if k in kwargs:
+                setattr(self, k, v.load(kwargs[k]))
+                del kwargs[k]
+            elif k in self._required_values:
                 raise TypeError("type {0} requires an argument {1}".format(
                     type(self), k
                 ))
-            setattr(self, k, v.load(kwargs[k]))
-            del kwargs[k]
         if len(kwargs):
             raise TypeError("type {0} does not accept arguments {1}".format(
                 type(self), kwargs.keys()
@@ -39,9 +41,12 @@ class SerializableObject(object):
     @classmethod
     def _create_serializer(cls):
         serializer = {}
-        for name, typ in cls._schema.items():
+        for name, typ in cls._schema["attributes"].items():
             serializer[name] = _get_serializer(typ)
-        return serializer
+        return (
+            serializer,
+            cls._schema.get("required", cls._schema["attributes"].keys())
+        )
 
 
 class SerializerObjectSerializer(object):

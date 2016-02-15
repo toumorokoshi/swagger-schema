@@ -1,8 +1,14 @@
-from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
 from .external_documentation import ExternalDocumentation
 
 
-class Tag(Schema):
-    name = fields.Str(required=True)
-    description = fields.Str()
-    externalDocs = fields.Nested(ExternalDocumentation)
+class Tag(SerializableObject):
+    _schema = {
+        "attributes": {
+            "name": string_type,
+            "description": string_type,
+            "externalDocs": ExternalDocumentation
+        },
+        "required": ["name"]
+    }
