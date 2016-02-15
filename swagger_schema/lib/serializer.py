@@ -18,8 +18,8 @@ class SerializableObject(object):
                 raise TypeError("type {0} requires an argument {1}".format(
                     type(self), k
                 ))
-            setattr(self, k, v.load(kwargs[v]))
-            kwargs.remove(k)
+            setattr(self, k, v.load(kwargs[k]))
+            del kwargs[k]
         if len(kwargs):
             raise TypeError("type {0} does not accept arguments {1}".format(
                 type(self), kwargs.keys()
@@ -27,10 +27,10 @@ class SerializableObject(object):
 
     def dump(self):
         out_dict = {}
-        for k, v in self._schema.items():
-            val = getattr(self, v)
-            out_dict[k] = self._dump_attribute(val)
-            return out_dict
+        for k, serializer in self._serializer.items():
+            val = getattr(self, k)
+            out_dict[k] = serializer.dump(val)
+        return out_dict
 
     @classmethod
     def load(cls, from_dict):
@@ -60,15 +60,14 @@ class SerializerObjectSerializer(object):
 
 
 def _get_serializer(typ):
-    for name, typ in cls._schema.items():
-        if issubclass(typ, SerializableObject):
-            return SerializerObjectSerializer(typ)
-        elif isinstance(typ, list):
-            return
-        else:
-            for basetype in BASETYPE_SERIALIZERS:
-                if issubclass(basetype, typ):
-                    return BASETYPE_SERIALIZERS[basetype]
+    if isinstance(typ, list):
+        return ListSerializer(typ[0])
+    elif issubclass(typ, SerializableObject):
+        return SerializerObjectSerializer(typ)
+    else:
+        for basetype in BASETYPE_SERIALIZERS:
+            if issubclass(basetype, typ):
+                return BASETYPE_SERIALIZERS[basetype]
     raise SerializerNotFound()
 
 

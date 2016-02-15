@@ -47,4 +47,3 @@ def test_full_example():
             }
         }
     })
-    import pdb; pdb.set_trace()

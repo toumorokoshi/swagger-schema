@@ -11,7 +11,7 @@ def test(build):
     pytest = os.path.join(build.root, "bin", "py.test")
     subprocess.call([
         pytest, "--cov", "swagger_schema",
-        "swagger_schema/tests",
+        "swagger_schema",
         "--cov-report", "term-missing"
     ])
 
