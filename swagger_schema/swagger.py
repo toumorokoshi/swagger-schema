@@ -18,7 +18,7 @@ class _Swagger(SerializableObject):
         "attributes": {
             "basePath": string_type,
             "consumes":  [string_type],
-            # "definitions": TypedDict
+            # "definitions": TypedDict <string_type, JsonSchema>
             "externalDocs": ExternalDocumentation,
             "host": string_type,
             "info": Info,
@@ -36,18 +36,18 @@ class _Swagger(SerializableObject):
 
 
 class Swagger(Schema):
-    basePath = fields.Str()
-    consumes = fields.List(fields.Str)
-    definitions = TypedDict(fields.Str, fields.Nested(JsonSchema))
-    externalDocs = fields.Nested(ExternalDocumentation)
-    host = fields.Str()
-    info = fields.Nested(Info, required=True)
-    paths = TypedDict(fields.Str, fields.Nested(Path), required=True)
-    parameters = fields.Nested(Parameters)
-    produces = fields.List(fields.Str)
-    responses = TypedDict(fields.Str, fields.Nested(Response))
-    schemes = fields.List(fields.Str)
-    swagger = fields.Str(required=True)
-    securityDefinitions = TypedDict(fields.Str, fields.Nested(SecurityDefinitions))
-    security = fields.List(fields.Nested(SecurityRequirement))
-    tags = fields.List(fields.Nested(Tag))
+    #basePath = fields.Str()
+    #consumes = fields.List(fields.Str)
+    #definitions = TypedDict(fields.Str, fields.Nested(JsonSchema))
+    #externalDocs = fields.Nested(ExternalDocumentation)
+    #host = fields.Str()
+    #info = fields.Nested(Info, required=True)
+    #paths = TypedDict(fields.Str, fields.Nested(Path), required=True)
+    #parameters = fields.Nested(Parameters)
+    #produces = fields.List(fields.Str)
+    #responses = TypedDict(fields.Str, fields.Nested(Response))
+    #schemes = fields.List(fields.Str)
+    #swagger = fields.Str(required=True)
+    #securityDefinitions = TypedDict(fields.Str, fields.Nested(SecurityDefinitions))
+    #security = fields.List(fields.Nested(SecurityRequirement))
+    #tags = fields.List(fields.Nested(Tag))

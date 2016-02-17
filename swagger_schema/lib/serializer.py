@@ -65,6 +65,8 @@ class SerializerObjectSerializer(object):
 
 
 def _get_serializer(typ):
+    if issubclass(typ, Serializer):
+        return typ
     if isinstance(typ, list):
         return ListSerializer(typ[0])
     elif issubclass(typ, SerializableObject):
@@ -76,7 +78,17 @@ def _get_serializer(typ):
     raise SerializerNotFound()
 
 
-class StringSerializer(object):
+class Serializer(object):
+    """ """
+
+    def dump(self, value):
+        pass
+
+    def load(value):
+        pass
+
+
+class StringSerializer(Serializer):
     @staticmethod
     def dump(value):
         return str(value)
@@ -86,7 +98,7 @@ class StringSerializer(object):
         return str(raw_value)
 
 
-class IntSerializer(object):
+class IntSerializer(Serializer):
     @staticmethod
     def dump(value):
         return int(value)
@@ -96,7 +108,7 @@ class IntSerializer(object):
         return int(raw_value)
 
 
-class FloatSerializer(object):
+class FloatSerializer(Serializer):
     @staticmethod
     def dump(value):
         return float(value)
@@ -106,7 +118,7 @@ class FloatSerializer(object):
         return float(raw_value)
 
 
-class BoolSerializer(object):
+class BoolSerializer(Serializer):
     @staticmethod
     def dump(value):
         return bool(value)
@@ -116,7 +128,7 @@ class BoolSerializer(object):
         return bool(raw_value)
 
 
-class ListSerializer(object):
+class ListSerializer(Serializer):
 
     def __init__(self, subtype):
         self._subtype = subtype
