@@ -30,8 +30,9 @@ class SerializableObject(object):
     def dump(self):
         out_dict = {}
         for k, serializer in self._serializer.items():
-            val = getattr(self, k)
-            out_dict[k] = serializer.dump(val)
+            if hasattr(self, k):
+                val = getattr(self, k)
+                out_dict[k] = serializer.dump(val)
         return out_dict
 
     @classmethod
@@ -65,10 +66,10 @@ class SerializerObjectSerializer(object):
 
 
 def _get_serializer(typ):
-    if issubclass(typ, Serializer):
-        return typ
     if isinstance(typ, list):
         return ListSerializer(typ[0])
+    elif issubclass(typ, Serializer):
+        return typ
     elif issubclass(typ, SerializableObject):
         return SerializerObjectSerializer(typ)
     else:

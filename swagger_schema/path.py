@@ -1,13 +1,18 @@
-from marshmallow import Schema, fields
+from .lib.serializer import SerializableObject
+from .operation import Operation
 
 
-class Path(Schema):
-    # get = operations object
-    # put = operations object
-    # post = operations object
-    # delete = operations object
-    # options= operations object
-    # head = operations object
-    # patch = operations object
-    # parameters = [parameters object | reference object]
-    pass
+class Path(SerializableObject):
+    _schema = {
+        "attributes": {
+            "get": Operation,
+            "put": Operation,
+            "post": Operation,
+            "delete": Operation,
+            "options": Operation,
+            "head": Operation,
+            "patch": Operation
+            # parameters: [Parameter object | reference object]
+        },
+        "required": []
+    }

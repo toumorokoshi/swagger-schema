@@ -1,18 +1,24 @@
-from marshmallow import Schema, fields
 from .external_documentation import ExternalDocumentation
+from .lib.serializer import SerializableObject
+from .lib.compat import string_type
+from .responses import Responses
 
 
-class Operation(Schema):
-    tags = fields.Str()  # many
-    summary = fields.Str()
-    description = fields.Str()
-    operationId = fields.Str()
-    consumes = fields.Str()  # many
-    produces = fields.Str()  # many
-    schemes = fields.Str()  # many
-    deprecated = fields.Bool()
-    externalDocs = fields.Nested(ExternalDocumentation)
-    # security = [security requirement object]
-    # responses = responses object required
-    # parameters = [parameter object | reference object]
-    pass
+class Operation(SerializableObject):
+    _schema = {
+        "attributes": {
+            "tags": [string_type],
+            "summary": string_type,
+            "description": string_type,
+            "operationId": string_type,
+            "consumes": [string_type],
+            "produces": [string_type],
+            "schemes": [string_type],
+            "deprecated": bool,
+            "externalDocs": ExternalDocumentation,
+            "responses": Responses
+            # security = [security requirement object]
+            # parameters = [parameter object | reference object]
+        },
+        "required": ["responses"]
+    }
