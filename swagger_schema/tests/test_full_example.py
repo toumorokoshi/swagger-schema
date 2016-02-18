@@ -3,6 +3,8 @@ from swagger_schema import (
     Operation,
     Path,
     Paths,
+    Responses,
+    Response,
     Swagger
 )
 
@@ -22,18 +24,22 @@ def test_full_example():
                     produces=[
                         "application/json",
                         "text/x-yaml"
-                    ]
+                    ],
+                    responses=Responses({
+                        200: Response(
+                            description="ok"
+                        )
+                    })
                 )
             )
         }),
         swagger="2.0"
     )
-    import pdb; pdb.set_trace()
     result = Swagger.load({
         "swagger": "2.0",
         "info": {
             "title": "Swagger Sample App",
-            "description": "This is a sample server Petstore server.",
+            "versions": "1.0",
         },
         "paths": {
             "/pets": {
