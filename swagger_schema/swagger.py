@@ -20,7 +20,7 @@ class Swagger(SerializableObject):
             "host": string_type,
             "info": Info,
             "paths": Paths,
-            # "parameters": TypedDict
+            "parameters": Parameters,
             # "responses": TypeDict
             "schemes": [string_type],
             "swagger": string_type,
