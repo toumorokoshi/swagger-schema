@@ -1,6 +1,6 @@
 import pytest
-from ..serializer import SerializableObject
-from ..compat import string_type
+from swagger_schema.lib.serializer import SerializableObject
+from swagger_schema.lib.compat import string_type
 
 
 class Example(SerializableObject):

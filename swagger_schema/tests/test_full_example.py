@@ -39,7 +39,7 @@ def test_full_example():
         "swagger": "2.0",
         "info": {
             "title": "Swagger Sample App",
-            "versions": "1.0",
+            "version": "1.0",
         },
         "paths": {
             "/pets": {
@@ -49,30 +49,23 @@ def test_full_example():
                     "responses": {
                         "200": {
                             "description": "A list of pets.",
-                            "schema": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/pet"
-                                }
+                            "schema":  {
+                                "type": "object",
+                                "descriminator": "petType",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "petType": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["name", "petType"]
                             }
                         }
                     }
                 }
             }
         },
-        "definitions": {
-            "pet": {
-                "type": "object",
-                "descriminator": "petType",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "petType": {
-                        "type": "string"
-                    }
-                },
-                "required": ["name", "petType"]
-            }
-        }
     })
+    print(result.dump())

@@ -15,10 +15,10 @@ class TypedDict(dict, SerializableObject):
         return out
 
     @classmethod
-    def load(self, from_dict):
-        out = TypedDict(self._key_type, self._value_type)
+    def load(cls, from_dict):
+        out = cls()
         for k, v in from_dict.items():
-            out[self._key_serializer.load(k)] = self._value_serializer.load(v)
+            out[cls._key_serializer.load(k)] = cls._value_serializer.load(v)
         return out
 
     def __setitem__(self, key, value):
