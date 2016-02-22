@@ -5,8 +5,8 @@ from jsonschema.validators import Draft4Validator
 class JsonSchemaObject(dict, SerializableObject):
 
     def __init__(self, *args, **kwargs):
-        super(self).__init__(*args, **kwargs)
-        Draft4Validator.validate(self)
+        super(JsonSchemaObject, self).__init__(*args, **kwargs)
+        Draft4Validator.check_schema(self)
 
     def dump(self):
         return dict(self)

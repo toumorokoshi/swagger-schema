@@ -62,7 +62,7 @@ class SerializerObjectSerializer(object):
     def load(self, raw_value):
         if isinstance(raw_value, self._typ):
             return raw_value
-        return self._typ(**raw_value)
+        return self._typ.load(raw_value)
 
 
 def _get_serializer(typ):

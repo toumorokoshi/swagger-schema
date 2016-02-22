@@ -13,7 +13,7 @@ def test(build):
         pytest, "--cov", "swagger_schema",
         "swagger_schema",
         "--cov-report", "term-missing"
-    ])
+    ] + build.options.args)
 
 
 def distribute(build):

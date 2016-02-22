@@ -35,7 +35,7 @@ def test_full_example():
         }),
         swagger="2.0"
     )
-    result = Swagger.load({
+    full = {
         "swagger": "2.0",
         "info": {
             "title": "Swagger Sample App",
@@ -67,5 +67,6 @@ def test_full_example():
                 }
             }
         },
-    })
-    print(result.dump())
+    }
+    result = Swagger.load(full)
+    assert result.dump() == full
