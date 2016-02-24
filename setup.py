@@ -12,8 +12,8 @@ install_requires = [
 
 tests_require = []
 
-setup(name='web-transmute',
-      version='0.0.3',
+setup(name='swagger-schema',
+      version='0.0.2',
       description=(
           "a utility library to help provide api route "
           "generation form function signature for web "
