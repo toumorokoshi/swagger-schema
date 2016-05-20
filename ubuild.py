@@ -1,11 +1,13 @@
 import os
 import subprocess
+from uranium import task_requires
 
 
 def main(build):
     build.packages.install(".", develop=True)
 
 
+@task_requires("main")
 def test(build):
     build.packages.install("pytest-cov")
     pytest = os.path.join(build.root, "bin", "py.test")

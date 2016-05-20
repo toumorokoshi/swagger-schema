@@ -28,11 +28,6 @@ class Parameter(SerializableObject):
     _schema = dict(BASE_SCHEMA)
 
 
-class QueryParameter(Parameter):
-    _in = "query"
-    pass
-
-
 class BodyParameter(Parameter):
     _in = "body"
 
@@ -40,6 +35,7 @@ class BodyParameter(Parameter):
 class NonBodyParameter(Parameter):
     _schema = _extend_schema(BASE_SCHEMA, {
         "attributes": {
+            "in": string_type,
             # string, number, integer, boolean, array,
             # file
             "type": string_type,

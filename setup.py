@@ -7,13 +7,14 @@ base = os.path.dirname(os.path.abspath(__file__))
 README_PATH = os.path.join(base, "README.rst")
 
 install_requires = [
-    'jsonschema'
+    'jsonschema',
+    'schematics'
 ]
 
 tests_require = []
 
 setup(name='swagger-schema',
-      version='0.0.2',
+      version='0.0.3',
       description=(
           "a utility library to help provide api route "
           "generation form function signature for web "

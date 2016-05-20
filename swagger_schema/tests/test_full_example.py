@@ -1,6 +1,9 @@
 from swagger_schema import (
     Info,
     Operation,
+    Parameters,
+    Parameter,
+    BodyParameter,
     Path,
     Paths,
     Responses,
@@ -15,6 +18,7 @@ def test_full_example():
         paths=Paths({
             "/test": Path(
                 get=Operation(
+                    # parameters=Param
                     summary="this is a test",
                     description="this is only a test",
                     consumes=[

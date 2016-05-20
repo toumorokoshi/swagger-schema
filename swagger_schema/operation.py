@@ -2,6 +2,7 @@ from .external_documentation import ExternalDocumentation
 from .lib.serializer import SerializableObject
 from .lib.compat import string_type
 from .responses import Responses
+from .parameters import Parameters
 
 
 class Operation(SerializableObject):
@@ -16,9 +17,9 @@ class Operation(SerializableObject):
             "schemes": [string_type],
             "deprecated": bool,
             "externalDocs": ExternalDocumentation,
-            "responses": Responses
+            "responses": Responses,
+            "parameters": Parameters,
             # security = [security requirement object]
-            # parameters = [parameter object | reference object]
         },
         "required": ["responses"]
     }
