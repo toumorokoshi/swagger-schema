@@ -1,44 +1,49 @@
 from schematics.models import Model
-from schematics.types import StringType, BooleanType
+from schematics.types import BaseType, StringType, BooleanType
+from schematics.types.serializable import serializable
 from schematics.types.compound import ModelType
-from schematics.exceptions import ValidationError
+from .items import Items
+from .types import DiscreteStringType, DataType
 
 
 class _ParameterBase(Model):
     name = StringType(required=True)
     description = StringType()
     required = BooleanType()
-    pass
+
+    @serializable(serialized_name="in")
+    def _in(self):
+        self._IN
 
 
 class _ParameterNonbody(Model):
-    type = StringType(required=True, validators=[_is_valid_datatype])
+    type = DataType(required=True)
     format = StringType()
     allowEmptyValue = BooleanType()
-    # items =
-    pass
+    items = ModelType(Items)
+    collectionFormat = DiscreteStringType(
+        valid_strings=["csv", "ssv", "tsv", "pipes"]
+    )
+    default = BaseType()
 
 
-class QueryParameter(_ParameterBase):
-    # in = query
-    pass
+class QueryParameter(Items, _ParameterBase):
+    _IN = "query"
+
+
+class HeaderParameter(Items, _ParameterBase):
+    _IN = "header"
+
+
+class FormDataParameter(Items, _ParameterBase):
+    _IN = "formData"
+
+
+class PathParameter(Items, _ParameterBase):
+    _IN = "path"
+    required = BooleanType(required=True)
 
 
 class BodyParameter(_ParameterBase):
-    # in = body
+    _IN = "path"
     # schema = SchemaObject
-
-
-class HeaderParameter(_ParameterBase):
-    # in = header
-    pass
-
-
-class FormDataParameter(_ParameterBase):
-    # in = formData
-    pass
-
-
-class PathParameter(_ParameterBase):
-    # in = path
-    required = BooleanType(required=True)
