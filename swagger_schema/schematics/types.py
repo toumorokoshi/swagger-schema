@@ -24,7 +24,7 @@ class DiscreteStringType(StringType):
             ))
 
 
-class DataType(StringType):
+class DataTypeFormat(StringType):
 
     VALID_DATATYPES = [
         "string", "number", "integer",
@@ -32,7 +32,7 @@ class DataType(StringType):
     ]
 
     def __init__(self, additional_valid_types=None, **kwargs):
-        super(DataType, self).__init__(**kwargs)
+        super(DataTypeFormat, self).__init__(**kwargs)
         self.valid_datatypes = self.VALID_DATATYPES + (
             additional_valid_types or []
         )

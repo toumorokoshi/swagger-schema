@@ -1,9 +1,11 @@
 from schematics.models import Model
-from schematics.types import BaseType, StringType, BooleanType
+from schematics.types import StringType, BooleanType
 from schematics.types.serializable import serializable
-from schematics.types.compound import ModelType
+from schematics.types.compound import (
+    DictType, PolyModelType, ModelType
+)
 from .items import Items
-from .types import DiscreteStringType, DataType
+from .schema import Schema
 
 
 class _ParameterBase(Model):
@@ -14,17 +16,6 @@ class _ParameterBase(Model):
     @serializable(serialized_name="in")
     def _in(self):
         self._IN
-
-
-class _ParameterNonbody(Model):
-    type = DataType(required=True)
-    format = StringType()
-    allowEmptyValue = BooleanType()
-    items = ModelType(Items)
-    collectionFormat = DiscreteStringType(
-        valid_strings=["csv", "ssv", "tsv", "pipes"]
-    )
-    default = BaseType()
 
 
 class QueryParameter(Items, _ParameterBase):
@@ -46,4 +37,23 @@ class PathParameter(Items, _ParameterBase):
 
 class BodyParameter(_ParameterBase):
     _IN = "path"
-    # schema = SchemaObject
+    schema = ModelType(Schema)
+
+
+def _match_data_to_parameter(data):
+    """ find the appropriate parameter for a parameter field """
+    in_value = data["in"]
+    for cls in [QueryParameter, HeaderParameter, FormDataParameter,
+                PathParameter, BodyParameter]:
+        if in_value == cls._IN:
+            return cls
+    return None
+
+
+Parameters = DictType(
+    PolyModelType([
+        QueryParameter, HeaderParameter,
+        FormDataParameter, PathParameter,
+        BodyParameter
+    ])
+)

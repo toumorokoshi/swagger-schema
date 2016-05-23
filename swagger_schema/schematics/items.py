@@ -5,11 +5,11 @@ from schematics.types import (
 from schematics.types.compound import (
     ListType, ModelType
 )
-from .types import DiscreteStringType, DataType
+from .types import DiscreteStringType, DataTypeFormat
 
 
 class Items(Model):
-    type = DataType()
+    type = DataTypeFormat()
     format = StringType()
     collectionFormat = DiscreteStringType(
         valid_strings=["csv", "ssv", "tsv", "pipes"]

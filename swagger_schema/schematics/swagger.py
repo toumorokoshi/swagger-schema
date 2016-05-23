@@ -1,10 +1,16 @@
 from schematics.models import Model
 from schematics.types import StringType
-from schematics.types.compound import ModelType, ListType
+from schematics.types.compound import (
+    DictType, ModelType, ListType
+)
 from schematics.exceptions import ValidationError
-from .types import MimeType
-
+from .external_documentation import ExternalDocumentation
+from .path_item import PathItem
+from .schema import Schema
+from .parameter import Parameters
 from .info import Info
+from .response import Responses
+from .tag import Tag
 
 
 def _is_20(value):
@@ -36,3 +42,11 @@ class Swagger(Model):
     schemes = ListType(StringType(validators=[_is_supported_protocol]))
     consumes = ListType(StringType())
     produces = ListType(StringType())
+    paths = DictType(ModelType(PathItem))
+    definitions = DictType(ModelType(Schema))
+    parameters = Parameters
+    responses = Responses
+    # security definitions
+    # security_requirement
+    tags = ListType(ModelType(Tag))
+    externalDocs = ModelType(ExternalDocumentation)
