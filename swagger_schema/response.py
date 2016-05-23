@@ -1,15 +1,14 @@
-from .lib.serializer import SerializableObject
-from .lib.compat import string_type
-from .schema import JsonSchemaObject
+from schematics.models import Model
+from schematics.types import StringType
+from schematics.types.compound import DictType, ModelType
+from .schema import Schema
 
 
-class Response(SerializableObject):
-    _schema = {
-        "attributes": {
-            "description": string_type,
-            "schema": JsonSchemaObject
-            # headers
-            # example object
-        },
-        "required": ["description"]
-    }
+class Response(Model):
+    description = StringType(required=True)
+    schema = ModelType(Schema)
+    # headers
+    # examples
+
+
+Responses = DictType(Response)

@@ -1,25 +1,19 @@
+from schematics.models import Model
+from schematics.types import StringType
+from schematics.types.compound import (
+    DictType, ListType, ModelType, PolyModelType
+)
 from .external_documentation import ExternalDocumentation
-from .lib.serializer import SerializableObject
-from .lib.compat import string_type
-from .responses import Responses
-from .parameters import Parameters
+from .types import MimeType
+from .parameter import Parameters
 
 
-class Operation(SerializableObject):
-    _schema = {
-        "attributes": {
-            "tags": [string_type],
-            "summary": string_type,
-            "description": string_type,
-            "operationId": string_type,
-            "consumes": [string_type],
-            "produces": [string_type],
-            "schemes": [string_type],
-            "deprecated": bool,
-            "externalDocs": ExternalDocumentation,
-            "responses": Responses,
-            "parameters": Parameters,
-            # security = [security requirement object]
-        },
-        "required": ["responses"]
-    }
+class Operation(Model):
+    tags = ListType(StringType())
+    summary = StringType()
+    description = StringType()
+    externalDocs = ModelType(ExternalDocumentation)
+    operationId = StringType()
+    consumes = ListType(MimeType())
+    produces = ListType(MimeType())
+    parameters = Parameters

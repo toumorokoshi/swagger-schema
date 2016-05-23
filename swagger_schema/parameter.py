@@ -1,73 +1,59 @@
-import copy
-from .lib.serializer import SerializableObject
-from .lib.compat import string_type
+from schematics.models import Model
+from schematics.types import StringType, BooleanType
+from schematics.types.serializable import serializable
+from schematics.types.compound import (
+    DictType, PolyModelType, ModelType
+)
 from .items import Items
-
-BASE_SCHEMA = {
-    "attributes": {
-        "name": string_type,
-        "in": string_type,
-        "description": string_type,
-        "required": bool
-    },
-    "required": ["name", "in"]
-}
+from .schema import Schema
 
 
-def _extend_schema(base, extension):
-    attributes = copy.copy(base["attributes"])
-    attributes.update(extension.get("attributes", {}))
-    required = list(set(base["required"]) | set(extension["required"]))
-    return {
-        "attributes": attributes,
-        "required": required
-    }
+class _ParameterBase(Model):
+    name = StringType(required=True)
+    description = StringType()
+    required = BooleanType()
+
+    @serializable(serialized_name="in")
+    def _in(self):
+        self._IN
 
 
-class Parameter(SerializableObject):
-    _schema = dict(BASE_SCHEMA)
+class QueryParameter(Items, _ParameterBase):
+    _IN = "query"
 
 
-class BodyParameter(Parameter):
-    _in = "body"
+class HeaderParameter(Items, _ParameterBase):
+    _IN = "header"
 
 
-class NonBodyParameter(Parameter):
-    _schema = _extend_schema(BASE_SCHEMA, {
-        "attributes": {
-            "in": string_type,
-            # string, number, integer, boolean, array,
-            # file
-            "type": string_type,
-            "format": string_type,
-            "allowEmptyValue": bool,
-            "items": Items,
-            "collectionFormat": string_type,
-            # "default": Any,
-            "maximum": float,
-            "exclusiveMaximum": bool,
-            "minimum": float,
-            "exclusiveMinimum": bool,
-            "maxLength": int,
-            "minLength": int,
-            "pattern": string_type,
-            "maxItems": int,
-            "minItems": int,
-            "uniqueItems": bool,
-            # "enum": list(any)
-            "multipleOf": float
-        },
-        "required": []
-    })
+class FormDataParameter(Items, _ParameterBase):
+    _IN = "formData"
 
 
-class HeaderParameter(NonBodyParameter):
-    _in = "header"
+class PathParameter(Items, _ParameterBase):
+    _IN = "path"
+    required = BooleanType(required=True)
 
 
-class PathParameter(NonBodyParameter):
-    _in = "path"
+class BodyParameter(_ParameterBase):
+    _IN = "path"
+    schema = ModelType(Schema)
 
 
-class FormDataParameter(NonBodyParameter):
-    _in = "formData"
+def _match_data_to_parameter(data):
+    """ find the appropriate parameter for a parameter field """
+    in_value = data["in"]
+    for cls in [QueryParameter, HeaderParameter, FormDataParameter,
+                PathParameter, BodyParameter]:
+        if in_value == cls._IN:
+            return cls
+    return None
+
+
+Parameters = DictType(
+    PolyModelType([
+        QueryParameter, HeaderParameter,
+        FormDataParameter, PathParameter,
+        BodyParameter
+    ])
+)

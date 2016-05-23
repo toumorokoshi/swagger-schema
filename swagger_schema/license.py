@@ -1,12 +1,7 @@
-from .lib.serializer import SerializableObject
-from .lib.compat import string_type
+from schematics.models import Model
+from schematics.types import StringType
 
 
-class License(SerializableObject):
-    _schema = {
-        "attributes": {
-            "name": string_type,
-            "url": string_type
-        },
-        "required": ["name"]
-    }
+class License(Model):
+    name = StringType(required=True)
+    url = StringType()

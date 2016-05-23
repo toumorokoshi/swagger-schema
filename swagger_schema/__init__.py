@@ -1,15 +1,14 @@
-from .contact import Contact
 from .external_documentation import ExternalDocumentation
+from .contact import Contact
 from .info import Info
+from .items import Items
 from .license import License
-from .operation import Operation
-from .parameter import Parameter, BodyParameter
-from .parameters import Parameters
-from .paths import Paths
-from .path import Path
-from .response import Response
-from .responses import Responses
-from .schema import JsonSchemaObject
-from .security_requirement import SecurityRequirement
+from .schema import Schema
 from .swagger import Swagger
-from .tag import Tag
+from .operation import Operation
+from .path_item import PathItem
+from .parameter import (
+    QueryParameter, HeaderParameter,
+    FormDataParameter, PathParameter,
+    BodyParameter, Parameters
+)
