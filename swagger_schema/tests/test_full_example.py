@@ -33,7 +33,7 @@ def test_full_example():
         "swagger": "2.0",
         "info": {
             "title": "Swagger Sample App",
-            "version": "1.0",
+            "version": "1.0"
         },
         "paths": {
             "/pets": {
@@ -43,15 +43,16 @@ def test_full_example():
                     "produces": ["application/json"],
                     "responses": {
                         "200": {
-                            "description": "A list of pets.",
+                            "description": "A list of pets."
                         }
                     }
                 }
             }
-        },
+        }
     }
     result = Swagger(full)
-    assert result.to_primitive() == full
+    output = result.to_primitive()
+    assert output == full
 
 #                            "schema":  {
 #                                "type": "object",

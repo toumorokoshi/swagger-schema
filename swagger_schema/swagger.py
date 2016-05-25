@@ -37,16 +37,18 @@ def _is_supported_protocol(value):
 class Swagger(Model):
     swagger = StringType(validators=[_is_20])
     info = ModelType(Info)
-    host = StringType()
-    basePath = StringType(validators=[_starts_with_leading_slash])
-    schemes = ListType(StringType(validators=[_is_supported_protocol]))
-    consumes = ListType(StringType())
-    produces = ListType(StringType())
+    host = StringType(serialize_when_none=False)
+    basePath = StringType(validators=[_starts_with_leading_slash],
+                          serialize_when_none=False)
+    schemes = ListType(StringType(validators=[_is_supported_protocol]),
+                       serialize_when_none=False)
+    consumes = ListType(StringType(), serialize_when_none=False)
+    produces = ListType(StringType(), serialize_when_none=False)
     paths = DictType(ModelType(PathItem), required=True)
-    definitions = DictType(ModelType(Schema))
+    definitions = DictType(ModelType(Schema), serialize_when_none=False)
     parameters = Parameters
     responses = Responses
     # security definitions
     # security_requirement
-    tags = ListType(ModelType(Tag))
-    externalDocs = ModelType(ExternalDocumentation)
+    tags = ListType(ModelType(Tag), serialize_when_none=False)
+    externalDocs = ModelType(ExternalDocumentation, serialize_when_none=False)

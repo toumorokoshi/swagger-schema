@@ -11,13 +11,13 @@ from .reference import Reference
 
 
 class Operation(Model):
-    tags = ListType(StringType())
-    summary = StringType()
-    description = StringType()
-    externalDocs = ModelType(ExternalDocumentation)
-    operationId = StringType()
-    consumes = ListType(MimeType())
-    produces = ListType(MimeType())
+    tags = ListType(StringType(), serialize_when_none=False)
+    summary = StringType(serialize_when_none=False)
+    description = StringType(serialize_when_none=False)
+    externalDocs = ModelType(ExternalDocumentation, serialize_when_none=False)
+    operationId = StringType(serialize_when_none=False)
+    consumes = ListType(MimeType(), serialize_when_none=False)
+    produces = ListType(MimeType(), serialize_when_none=False)
     parameters = Parameters
     responses = DictType(
         PolyModelType([Response, Reference]),

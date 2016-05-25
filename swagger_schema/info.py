@@ -8,8 +8,8 @@ from .license import License
 
 class Info(Model):
     title = StringType(required=True)
-    description = StringType()
-    termsOfService = StringType()
-    contact = ModelType(Contact)
-    license = ModelType(License)
+    description = StringType(serialize_when_none=False)
+    termsOfService = StringType(serialize_when_none=False)
+    contact = ModelType(Contact, serialize_when_none=False)
+    license = ModelType(License, serialize_when_none=False)
     version = StringType(required=True)

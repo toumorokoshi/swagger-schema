@@ -55,5 +55,6 @@ Parameters = DictType(
         QueryParameter, HeaderParameter,
         FormDataParameter, PathParameter,
         BodyParameter
-    ])
+    ]),
+    serialize_when_none=False
 )

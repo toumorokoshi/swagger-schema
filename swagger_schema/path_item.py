@@ -13,15 +13,16 @@ from .parameter import (
 
 class PathItem(Model):
 
-    get = ModelType(Operation)
-    put = ModelType(Operation)
-    post = ModelType(Operation)
-    delete = ModelType(Operation)
-    options = ModelType(Operation)
-    head = ModelType(Operation)
-    patch = ModelType(Operation)
+    get = ModelType(Operation, serialize_when_none=False)
+    put = ModelType(Operation, serialize_when_none=False)
+    post = ModelType(Operation, serialize_when_none=False)
+    delete = ModelType(Operation, serialize_when_none=False)
+    options = ModelType(Operation, serialize_when_none=False)
+    head = ModelType(Operation, serialize_when_none=False)
+    patch = ModelType(Operation, serialize_when_none=False)
     parameters = ListType(
         PolyModelType([QueryParameter, HeaderParameter,
                       FormDataParameter, PathParameter,
-                       BodyParameter, Reference])
+                       BodyParameter, Reference]),
+        serialize_when_none=False
     )
