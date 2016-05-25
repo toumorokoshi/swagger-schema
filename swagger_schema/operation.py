@@ -6,6 +6,8 @@ from schematics.types.compound import (
 from .external_documentation import ExternalDocumentation
 from .types import MimeType
 from .parameter import Parameters
+from .response import Response
+from .reference import Reference
 
 
 class Operation(Model):
@@ -17,3 +19,7 @@ class Operation(Model):
     consumes = ListType(MimeType())
     produces = ListType(MimeType())
     parameters = Parameters
+    responses = DictType(
+        PolyModelType([Response, Reference]),
+        required=True
+    )

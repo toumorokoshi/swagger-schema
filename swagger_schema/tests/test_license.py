@@ -1,5 +1,5 @@
 import pytest
-from swagger_schema.schematics.license import License
+from swagger_schema.license import License
 from schematics.exceptions import ValidationError
 
 

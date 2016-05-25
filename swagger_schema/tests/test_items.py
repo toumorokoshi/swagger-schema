@@ -1,5 +1,5 @@
 import pytest
-from swagger_schema.schematics import Items
+from swagger_schema import Items
 
 
 @pytest.mark.parametrize("schema", [

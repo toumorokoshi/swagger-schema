@@ -1,44 +1,34 @@
 from swagger_schema import (
     Info,
     Operation,
-    Parameters,
-    Parameter,
-    BodyParameter,
-    Path,
-    Paths,
-    Responses,
+    PathItem,
     Response,
     Swagger
 )
 
 
 def test_full_example():
-    swagger = Swagger(
-        info=Info(title="example", version="1.0"),
-        paths=Paths({
-            "/test": Path(
-                get=Operation(
-                    # parameters=Param
-                    summary="this is a test",
-                    description="this is only a test",
-                    consumes=[
-                        "application/json",
-                        "text/x-yaml"
-                    ],
-                    produces=[
-                        "application/json",
-                        "text/x-yaml"
-                    ],
-                    responses=Responses({
-                        200: Response(
-                            description="ok"
-                        )
-                    })
-                )
-            )
+    swagger = Swagger({
+        "info": Info({
+            "title": "example",
+            "version": "1.0"
         }),
-        swagger="2.0"
-    )
+        "paths": {
+            "/test": PathItem({
+                "get": Operation({
+                    "summary": "this is a test",
+                    "consumes": ["application/json"],
+                    "produces": ["application/json"],
+                    "responses": {
+                        "200": Response({
+                            "description": "a list of pets"
+                        })
+                    }
+                })
+            })
+        },
+        "swagger": "2.0"
+    })
     full = {
         "swagger": "2.0",
         "info": {
@@ -48,29 +38,31 @@ def test_full_example():
         "paths": {
             "/pets": {
                 "get": {
-                    "description": "Returns all pets from the system that the user has access to.",
+                    "summary": "this is a test",
+                    "consumes": ["application/json"],
                     "produces": ["application/json"],
                     "responses": {
                         "200": {
                             "description": "A list of pets.",
-                            "schema":  {
-                                "type": "object",
-                                "descriminator": "petType",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "petType": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": ["name", "petType"]
-                            }
                         }
                     }
                 }
             }
         },
     }
-    result = Swagger.load(full)
-    assert result.dump() == full
+    result = Swagger(full)
+    assert result.to_primitive() == full
+
+#                            "schema":  {
+#                                "type": "object",
+#                                "descriminator": "petType",
+#                                "properties": {
+#                                    "name": {
+#                                        "type": "string"
+#                                    },
+#                                    "petType": {
+#                                        "type": "string"
+#                                    }
+#                                },
+#                                "required": ["name", "petType"]
+#                            }

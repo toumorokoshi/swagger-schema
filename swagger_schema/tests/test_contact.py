@@ -1,4 +1,4 @@
-from swagger_schema.schematics.contact import Contact
+from swagger_schema.contact import Contact
 
 
 def test_contact():

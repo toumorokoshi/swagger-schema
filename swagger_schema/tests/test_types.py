@@ -1,5 +1,5 @@
 import pytest
-from swagger_schema.schematics.types import DataType
+from swagger_schema.types import DataTypeFormat
 from schematics.exceptions import ValidationError
 
 
@@ -8,12 +8,12 @@ from schematics.exceptions import ValidationError
     "boolean", "array"
 ])
 def test_valid_datatypes(typ):
-    validator = DataType()
+    validator = DataTypeFormat()
     result = validator.to_native(typ)
     assert result == typ
 
 
 def test_invalid_datatypes():
-    validator = DataType()
+    validator = DataTypeFormat()
     with pytest.raises(ValidationError):
         validator.validate("ooga")

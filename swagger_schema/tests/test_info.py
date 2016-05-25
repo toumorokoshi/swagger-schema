@@ -1,6 +1,6 @@
 import pytest
 from schematics.exceptions import ValidationError
-from swagger_schema.schematics import Contact, License, Info
+from swagger_schema import Contact, License, Info
 
 
 def test_info(contact_json, license_json, info_json):

@@ -42,7 +42,7 @@ class Swagger(Model):
     schemes = ListType(StringType(validators=[_is_supported_protocol]))
     consumes = ListType(StringType())
     produces = ListType(StringType())
-    paths = DictType(ModelType(PathItem))
+    paths = DictType(ModelType(PathItem), required=True)
     definitions = DictType(ModelType(Schema))
     parameters = Parameters
     responses = Responses

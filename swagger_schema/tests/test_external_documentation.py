@@ -1,4 +1,4 @@
-from swagger_schema.schematics.external_documentation import ExternalDocumentation
+from swagger_schema.external_documentation import ExternalDocumentation
 
 
 def test_external_documentation():
