@@ -22,34 +22,25 @@ def test_full_example():
                     "responses": {
                         "200": Response({
                             "description": "a list of pets"
+                            #"schema":  Schema({
+                            #    "type": "object",
+                            #    "descriminator": "petType",
+                            #    "properties": {
+                            #        "name": {
+                            #            "type": "string"
+                            #        },
+                            #        "petType": {
+                            #            "type": "string"
+                            #        }
+                            #    },
+                            #    "required": ["name", "petType"]
+                            #})
                         })
                     }
                 })
             })
-        },
-        "swagger": "2.0"
-    })
-    full = {
-        "swagger": "2.0",
-        "info": {
-            "title": "Swagger Sample App",
-            "version": "1.0"
-        },
-        "paths": {
-            "/pets": {
-                "get": {
-                    "summary": "this is a test",
-                    "consumes": ["application/json"],
-                    "produces": ["application/json"],
-                    "responses": {
-                        "200": {
-                            "description": "A list of pets."
-                        }
-                    }
-                }
-            }
         }
-    }
+    })
     result = Swagger(full)
     output = result.to_primitive()
     assert output == full

@@ -7,6 +7,10 @@ class MimeType(StringType):
     pass
 
 
+class RegularExpression(StringType):
+    pass
+
+
 class DiscreteStringType(StringType):
     """ a string type where only a specific set is valid. """
 
