@@ -10,25 +10,21 @@ from .types import DiscreteStringType, DataTypeFormat
 
 class Items(Model):
     type = DataTypeFormat()
-    format = StringType()
+    format = StringType(required=False)
     collectionFormat = DiscreteStringType(
         valid_strings=["csv", "ssv", "tsv", "pipes"]
     )
-    default = BaseType()
-    maximum = FloatType()
-    exclusiveMaximum = BooleanType()
-    minimum = FloatType()
-    exclusiveMinimum = BooleanType()
-    maxLength = IntType()
-    minLength = IntType()
-    pattern = StringType()
-    maxItems = IntType()
-    minItems = IntType()
-    uniqueItems = BooleanType()
-    enum = ListType(BaseType())
-    multipleOf = FloatType()
-
-# a workaround for self-referential types.
-# replace when a blessed way to self-reference is provided.
-Items._fields["items"] = ModelType(Items)
-setattr(Items, "items", FieldDescriptor("items"))
+    default = BaseType(required=False)
+    maximum = FloatType(required=False)
+    exclusiveMaximum = BooleanType(required=False)
+    minimum = FloatType(required=False)
+    exclusiveMinimum = BooleanType(required=False)
+    maxLength = IntType(required=False)
+    minLength = IntType(required=False)
+    pattern = StringType(required=False)
+    maxItems = IntType(required=False)
+    minItems = IntType(required=False)
+    uniqueItems = BooleanType(required=False)
+    enum = ListType(BaseType(), required=False)
+    multipleOf = FloatType(required=False)
+    items = ModelType("Items")

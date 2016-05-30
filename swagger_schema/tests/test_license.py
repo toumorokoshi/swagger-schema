@@ -1,6 +1,6 @@
 import pytest
 from swagger_schema.license import License
-from schematics.exceptions import ValidationError
+from schematics.exceptions import BaseError
 
 
 def test_license():
@@ -16,6 +16,6 @@ def test_license():
 
 def test_license_no_name():
     """ name is required """
-    with pytest.raises(ValidationError):
+    with pytest.raises(BaseError):
         l = License({"url": "http://www.apache.org/licenses/LICENSE-2.0.html"})
         l.validate()

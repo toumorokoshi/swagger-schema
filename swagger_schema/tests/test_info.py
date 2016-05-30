@@ -1,5 +1,5 @@
 import pytest
-from schematics.exceptions import ValidationError
+from schematics.exceptions import BaseError
 from swagger_schema import Contact, License, Info
 
 
@@ -15,11 +15,11 @@ def test_info(contact_json, license_json, info_json):
 
 def test_info_version_required(info_json):
     del info_json["version"]
-    with pytest.raises(ValidationError):
+    with pytest.raises(BaseError):
         Info(info_json).validate()
 
 
 def test_info_title_required(info_json):
     del info_json["title"]
-    with pytest.raises(ValidationError):
+    with pytest.raises(BaseError):
         Info(info_json).validate()
