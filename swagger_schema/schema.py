@@ -25,9 +25,9 @@ class Schema(Model):
     pattern = RegularExpression(serialize_when_none=False)
 
     # validation for arrays
-    additionalItems = PolyModelType([BooleanType(), ModelType("Schema")],
+    additionalItems = PolyModelType([BooleanType(), "Schema"],
                                     serialize_when_none=False)
-    items = PolyModelType([ModelType("Schema"), ListType(ModelType("Schema"))],
+    items = PolyModelType(["Schema", ListType(ModelType("Schema"))],
                           serialize_when_none=False)
     maxItems = IntType(min_value=0, serialize_when_none=False)
     minItems = IntType(min_value=0, serialize_when_none=False)
@@ -36,7 +36,7 @@ class Schema(Model):
     # validation for objects
     maxProperties = IntType(min_value=0, serialize_when_none=False)
     minProperties = IntType(min_value=0, serialize_when_none=False)
-    additionalProperties = PolyModelType([BooleanType(), ModelType("Schema")],
+    additionalProperties = PolyModelType([BooleanType(), "Schema"],
                                          serialize_when_none=False)
     properties = DictType(ModelType("Schema"), serialize_when_none=False)
     patternProperties = DictType(ModelType("Schema"),
