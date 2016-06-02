@@ -1,8 +1,10 @@
+from __future__ import unicode_literals
 from swagger_schema import (
     Info,
     Operation,
     PathItem,
     Response,
+    Schema,
     Swagger
 )
 
@@ -21,20 +23,19 @@ def test_full_example():
                     "produces": ["application/json"],
                     "responses": {
                         "200": Response({
-                            "description": "a list of pets"
-                            #"schema":  Schema({
-                            #    "type": "object",
-                            #    "descriminator": "petType",
-                            #    "properties": {
-                            #        "name": {
-                            #            "type": "string"
-                            #        },
-                            #        "petType": {
-                            #            "type": "string"
-                            #        }
-                            #    },
-                            #    "required": ["name", "petType"]
-                            #})
+                            "description": "a list of pets",
+                            "schema": Schema({
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "petType": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["name", "petType"]
+                            })
                         })
                     }
                 })
@@ -55,7 +56,19 @@ def test_full_example():
                     "produces": ["application/json"],
                     "responses": {
                         "200": {
-                            "description": "a list of pets"
+                            "description": "a list of pets",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "petType": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["name", "petType"]
+                            }
                         }
                     }
                 }
@@ -65,17 +78,4 @@ def test_full_example():
     result = Swagger(full)
     output = result.to_primitive()
     assert output == full
-
-#                            "schema":  {
-#                                "type": "object",
-#                                "descriminator": "petType",
-#                                "properties": {
-#                                    "name": {
-#                                        "type": "string"
-#                                    },
-#                                    "petType": {
-#                                        "type": "string"
-#                                    }
-#                                },
-#                                "required": ["name", "petType"]
-#                            }
+    assert swagger.to_primitive() == full

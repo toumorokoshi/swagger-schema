@@ -42,6 +42,7 @@ class Schema(Model):
     patternProperties = DictType(ModelType("Schema"),
                                  serialize_when_none=False)
     dependencies = ModelType("Schema", serialize_when_none=False)
+    required = ListType(StringType(), min_size=1, serialize_when_none=False)
 
     # any type
     enum = ListType(BaseType(), serialize_when_none=False)

@@ -35,7 +35,7 @@ def _is_supported_protocol(value):
 
 
 class Swagger(Model):
-    swagger = StringType(validators=[_is_20])
+    swagger = StringType(validators=[_is_20], default="2.0")
     info = ModelType(Info)
     host = StringType(serialize_when_none=False)
     basePath = StringType(validators=[_starts_with_leading_slash],
