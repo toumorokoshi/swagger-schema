@@ -14,7 +14,7 @@ install_requires = [
 tests_require = []
 
 setup(name='swagger-schema',
-      version='0.0.3',
+      version='0.2.1b',
       description=(
           "a utility library to help provide api route "
           "generation form function signature for web "

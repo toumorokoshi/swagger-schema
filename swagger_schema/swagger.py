@@ -1,7 +1,7 @@
 from schematics.models import Model
 from schematics.types import StringType
 from schematics.types.compound import (
-    DictType, ModelType, ListType
+    ModelType, ListType
 )
 from schematics.exceptions import ValidationError
 from .external_documentation import ExternalDocumentation
@@ -11,6 +11,7 @@ from .parameter import Parameters
 from .info import Info
 from .response import Responses
 from .tag import Tag
+from .types import SortedDictType
 
 
 def _is_20(value):
@@ -44,8 +45,8 @@ class Swagger(Model):
                        serialize_when_none=False)
     consumes = ListType(StringType(), serialize_when_none=False)
     produces = ListType(StringType(), serialize_when_none=False)
-    paths = DictType(ModelType(PathItem), required=True)
-    definitions = DictType(ModelType(Schema), serialize_when_none=False)
+    paths = SortedDictType(ModelType(PathItem), required=True)
+    definitions = SortedDictType(ModelType(Schema), serialize_when_none=False)
     parameters = Parameters
     responses = Responses
     # security definitions

@@ -10,6 +10,13 @@ from .types import (
 )
 
 
+def _claim_additional_properties(cls, value):
+    boolean_type, schema_type = cls.model_classes
+    if isinstance(value, bool):
+        return boolean_type
+    return schema_type
+
+
 class Schema(Model):
     multipleOf = FloatType(min_value=0, serialize_when_none=False)
     # must be present if exclusiveMaximum is present.
@@ -36,7 +43,10 @@ class Schema(Model):
     # validation for objects
     maxProperties = IntType(min_value=0, serialize_when_none=False)
     minProperties = IntType(min_value=0, serialize_when_none=False)
-    additionalProperties = PolyModelType([BooleanType(), "Schema"],
+    # TODO: allow boolean type.
+    additionalProperties = PolyModelType(["Schema"],
+                                         # claim_function=_claim_additional_properties,
+                                         required=False,
                                          serialize_when_none=False)
     properties = DictType(ModelType("Schema"), serialize_when_none=False)
     patternProperties = DictType(ModelType("Schema"),

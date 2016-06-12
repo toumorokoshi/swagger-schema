@@ -1,6 +1,9 @@
 import random
+from collections import OrderedDict
 from schematics.types import StringType
+from schematics.types.compound import DictType
 from schematics.exceptions import StopValidation
+
 
 
 class MimeType(StringType):
@@ -49,3 +52,14 @@ class DataTypeFormat(StringType):
             raise StopValidation("not a valid dataype (one of {0})".format(
                 self.valid_datatypes
             ))
+
+
+class SortedDictType(DictType):
+    """ a dict type, which outputs sorted values for "to_primitive" """
+
+    def _export(self, dict_instance, format, context):
+        output = super(SortedDictType, self)._export(dict_instance, format, context)
+        sorted_output = OrderedDict()
+        for k in sorted(output.keys()):
+            sorted_output[k] = output[k]
+        return sorted_output

@@ -12,7 +12,15 @@ from swagger_schema import Schema
             "petType": {"type": "string"}
         },
         "required": ["name", "petType"]
-    })
+    }),
+    ("additional_props", {
+        "type": "object",
+        "additionalProperties": {"type": "number"}
+    }),
+    #("additional_props_bool", {
+    #    "type": "object",
+    #    "additionalProperties": True
+        #})
 ])
 def test_schema(name, data):
     assert Schema(data).to_primitive() == data

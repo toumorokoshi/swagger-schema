@@ -5,7 +5,8 @@ from swagger_schema import (
     PathItem,
     Response,
     Schema,
-    Swagger
+    Swagger,
+    QueryParameter
 )
 
 
@@ -21,6 +22,14 @@ def test_full_example():
                     "summary": "this is a test",
                     "consumes": ["application/json"],
                     "produces": ["application/json"],
+                    "parameters": [
+                        QueryParameter({
+                            "name": "foo",
+                            "description": "a foo parameter.",
+                            "required": False,
+                            "type": "string"
+                        })
+                    ],
                     "responses": {
                         "200": Response({
                             "description": "a list of pets",
@@ -38,6 +47,21 @@ def test_full_example():
                             })
                         })
                     }
+                }),
+            }),
+            "/z": PathItem({
+                "get": Operation({
+                    "summary": "this is a test",
+                    "consumes": ["application/json"],
+                    "produces": ["application/json"],
+                    "responses": {
+                        "200": Response({
+                            "description": "a list of pets",
+                            "schema": Schema({
+                                "type": "string",
+                            })
+                        })
+                    }
                 })
             })
         }
@@ -49,11 +73,35 @@ def test_full_example():
             "version": "1.0"
         },
         "paths": {
+            "/z": {
+                "get": {
+                    "summary": "this is a test",
+                    "consumes": ["application/json"],
+                    "produces": ["application/json"],
+                    "responses": {
+                        "200": {
+                            "description": "a list of pets",
+                            "schema": {
+                                "type": "string",
+                            }
+                        }
+                    }
+                }
+            },
             "/test": {
                 "get": {
                     "summary": "this is a test",
                     "consumes": ["application/json"],
                     "produces": ["application/json"],
+                    "parameters": [
+                        {
+                            "in": "query",
+                            "name": "foo",
+                            "description": "a foo parameter.",
+                            "required": False,
+                            "type": "string"
+                        }
+                    ],
                     "responses": {
                         "200": {
                             "description": "a list of pets",
@@ -75,7 +123,9 @@ def test_full_example():
             }
         }
     }
+    assert swagger.to_primitive() == full
     result = Swagger(full)
     output = result.to_primitive()
     assert output == full
-    assert swagger.to_primitive() == full
+    # assert the sorted order is correct.
+    assert list(output["paths"].keys()) == ["/test", "/z"]

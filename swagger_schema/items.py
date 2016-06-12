@@ -9,22 +9,52 @@ from .types import DiscreteStringType, DataTypeFormat
 
 
 class Items(Model):
-    type = DataTypeFormat()
-    format = StringType(required=False)
+    type = DataTypeFormat(required=True)
+    format = StringType(
+        required=False,
+        serialize_when_none=False)
     collectionFormat = DiscreteStringType(
-        valid_strings=["csv", "ssv", "tsv", "pipes"]
+        valid_strings=["csv", "ssv", "tsv", "pipes"],
+        serialize_when_none=False
     )
-    default = BaseType(required=False)
-    maximum = FloatType(required=False)
-    exclusiveMaximum = BooleanType(required=False)
-    minimum = FloatType(required=False)
-    exclusiveMinimum = BooleanType(required=False)
-    maxLength = IntType(required=False)
-    minLength = IntType(required=False)
-    pattern = StringType(required=False)
-    maxItems = IntType(required=False)
-    minItems = IntType(required=False)
-    uniqueItems = BooleanType(required=False)
-    enum = ListType(BaseType(), required=False)
-    multipleOf = FloatType(required=False)
-    items = ModelType("Items")
+    default = BaseType(
+        required=False,
+        serialize_when_none=False)
+    maximum = FloatType(
+        required=False,
+        serialize_when_none=False)
+    exclusiveMaximum = BooleanType(
+        required=False,
+        serialize_when_none=False)
+    minimum = FloatType(
+        required=False,
+        serialize_when_none=False)
+    exclusiveMinimum = BooleanType(
+        required=False,
+        serialize_when_none=False)
+    maxLength = IntType(
+        required=False,
+        serialize_when_none=False)
+    minLength = IntType(
+        required=False,
+        serialize_when_none=False)
+    pattern = StringType(
+        required=False,
+        serialize_when_none=False)
+    maxItems = IntType(
+        required=False,
+        serialize_when_none=False)
+    minItems = IntType(
+        required=False,
+        serialize_when_none=False)
+    uniqueItems = BooleanType(
+        required=False,
+        serialize_when_none=False)
+    enum = ListType(BaseType(),
+                    required=False,
+                    serialize_when_none=False)
+    multipleOf = FloatType(required=False,
+                           serialize_when_none=False)
+    items = ModelType("Items",
+                      required=False,
+                      serialize_when_none=False)
