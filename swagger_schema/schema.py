@@ -56,7 +56,7 @@ class Schema(Model):
 
     # any type
     enum = ListType(BaseType(), serialize_when_none=False)
-    type = StringType(serialize_when_none=False)
+    type = StringType(serialize_when_none=False, required=True)
     format = DataTypeFormat(serialize_when_none=False)
     allOf = ListType(ModelType("Schema"), serialize_when_none=False)
     anyOf = ListType(ModelType("Schema"), serialize_when_none=False)

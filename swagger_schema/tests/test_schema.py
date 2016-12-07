@@ -17,10 +17,11 @@ from swagger_schema import Schema
         "type": "object",
         "additionalProperties": {"type": "number"}
     }),
-    #("additional_props_bool", {
-    #    "type": "object",
-    #    "additionalProperties": True
-        #})
 ])
 def test_schema(name, data):
     assert Schema(data).to_primitive() == data
+
+
+def test_type_required():
+    with pytest.raises(Exception):
+        Schema({}).validate()

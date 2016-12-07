@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 import os
+import sys
 from setuptools import setup, find_packages
+
+is_release = False
+if "--release" in sys.argv:
+    is_release = True
+    sys.argv.remove("--release")
 
 base = os.path.dirname(os.path.abspath(__file__))
 
@@ -14,7 +20,11 @@ install_requires = [
 tests_require = []
 
 setup(name='swagger-schema',
-      version='0.2.1b',
+      setup_requires=["vcver"],
+      vcver={
+          "is_release": is_release,
+          "path": base
+      },
       description=(
           "a utility library to help provide api route "
           "generation form function signature for web "
@@ -27,7 +37,7 @@ setup(name='swagger-schema',
       packages=find_packages(),
       install_requires=install_requires,
       classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Operating System :: MacOS',
           'Operating System :: POSIX :: Linux',
           'Topic :: System :: Software Distribution',
