@@ -55,6 +55,8 @@ class Items(Model):
                     serialize_when_none=False)
     multipleOf = FloatType(required=False,
                            serialize_when_none=False)
-    items = ModelType("Items",
-                      required=False,
-                      serialize_when_none=False)
+    items_ = ModelType("Items",
+                       required=False,
+                       serialized_name="items",
+                       deserialize_from=["items"],
+                       serialize_when_none=False)

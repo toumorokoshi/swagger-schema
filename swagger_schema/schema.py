@@ -34,8 +34,12 @@ class Schema(Model):
     # validation for arrays
     additionalItems = PolyModelType([BooleanType(), "Schema"],
                                     serialize_when_none=False)
-    items = PolyModelType(["Schema", ListType(ModelType("Schema"))],
-                          serialize_when_none=False)
+    items_ = PolyModelType(
+        ["Schema", ListType(ModelType("Schema"))],
+        serialized_name="items",
+        deserialize_from=["items"],
+        serialize_when_none=False
+    )
     maxItems = IntType(min_value=0, serialize_when_none=False)
     minItems = IntType(min_value=0, serialize_when_none=False)
     uniqueItems = BooleanType(serialize_when_none=False)

@@ -14,7 +14,7 @@ README_PATH = os.path.join(base, "README.rst")
 
 install_requires = [
     'jsonschema',
-    'schematics>=2.0.0a1'
+    'schematics>=2.0.0'
 ]
 
 tests_require = []

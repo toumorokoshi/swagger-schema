@@ -13,7 +13,11 @@ from .parameter import (
 
 class PathItem(Model):
 
-    get = ModelType(Operation, serialize_when_none=False)
+    get_ = ModelType(
+        Operation, serialize_when_none=False,
+        serialized_name="get",
+        deserialize_from=["get"],
+    )
     put = ModelType(Operation, serialize_when_none=False)
     post = ModelType(Operation, serialize_when_none=False)
     delete = ModelType(Operation, serialize_when_none=False)
