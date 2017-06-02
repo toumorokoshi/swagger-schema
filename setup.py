@@ -26,9 +26,7 @@ setup(name='swagger-schema',
           "path": base
       },
       description=(
-          "a utility library to help provide api route "
-          "generation form function signature for web "
-          "frameworks."
+          "a schematics-based schema for Swagger definitions."
       ),
       long_description=open(README_PATH).read(),
       author='Yusuke Tsutsumi',

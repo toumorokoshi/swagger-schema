@@ -1,5 +1,6 @@
 from .external_documentation import ExternalDocumentation
 from .contact import Contact
+from .headers import Header, Headers
 from .info import Info
 from .items import Items
 from .license import License
