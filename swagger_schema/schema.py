@@ -70,3 +70,5 @@ class Schema(Model):
     title = StringType(serialize_when_none=False)
     description = StringType(serialize_when_none=False)
     default = BaseType(serialize_when_none=False)
+    collectionFormat = StringType(choices={"csv", "ssv", "tsv", "pipes", "multi"},
+                                  serialize_when_none=False)
